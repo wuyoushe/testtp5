@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>省-市-县三级联动</title>
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="wrapper wrapper-content">
+    <h1>省-市-县三级联动</h1>
+    <div class="row col-sm-6">
+        <div class="col-sm-4">
+            <select class="form-control m-b" id="p">
+                <option value="0" data-id="0">不限区域</option>
+                {foreach name="province" item="vo"}
+                <option value="{$vo.name}" data-id="{$vo.id}">{$vo.name}</option>
+                {/foreach}
+            </select>
+        </div>
+        <div class="col-sm-4">
+            <select class="form-control m-b" id="c" disabled>
+                <option value="0" data-id="0">请选择城市</option>
+            </select>
+        </div>
+        <div class="col-sm-4">
+            <select class="form-control m-b" id="a" disabled>
+                <option value="0" data-id="0">请选择区</option>
+            </select>
+        </div>
+    </div>
+</div>
+</body>
+</html>
