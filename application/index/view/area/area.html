@@ -30,5 +30,83 @@
         </div>
     </div>
 </div>
+<script src="/static/js/jquery-3.3.1.min.js"></script>
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+<script>
+    var area_url = "{:url('area/area')}";
+    $(function () {
+        $('#p').change(function(){
+            var pid = $(this).find("option:selected").attr('data-id');
+            if('0' == pid) {
+                $("#pname").val('不限区域');
+                $("#c").html('<option value="0" data-id="0">选择城市</option>').attr('disabled', true);
+                $("#a").html('<option value="0" data-id="0">选择区</option>').attr('disabled', true);
+            }
+            if('0' == pid) {
+                return;
+            }
+            $.post(
+                area_url,
+                {'code' :pid},
+                function(res) {
+                    if(res.code == 1) {
+                        var _html = '<option value="0" data-id="0">选择城市</option>';
+                        $.each(res.data, function(k, v){
+
+                            _html += '<option value="'+v.name+'" data-id="'+v.id+'">'+v.name+'</option>';
+                        });
+                        $('#c').html(_html);
+                    }
+                }, 'json');
+            $('#c').removeAttr('disabled');
+            $('#a').html('<option value="0" data-id="0">选择区</option>').attr('disabled', true);
+        });
+
+        $('#c').change(function(){
+            var cid = $(this).find("option:selected").attr('data-id');
+            //已选择了城市，又不选城市，改变属性
+            if('0' == cid) {
+                $("#cname").val('');
+                $("#a").html('<option value="0" data-id="0">选择区</option>').attr('disabled', true);
+            }
+            if('0' == cid) {
+                return ;
+            }
+            $.post(area_url, {'code': cid}, function(res) {
+                    if(1 == res.code){
+                        var _html = '<option value="0" data-id="0">选择区</option>';
+//                    遍历请求的数据
+                        $.each(res.data, function(k, v){
+                            _html += '<option value="'+v.name+'" data-id="'+v.id+'">'+v.name+'</option>'
+                        });
+                        $('#a').html(_html);
+                    }
+                }, 'json');
+            $("#a").removeAttr('disabled');
+        });
+
+        $('#a').change(function(){
+            var aid = $(this).find("option:selected").attr('data-id');
+            if('0' == aid) {
+                $("#aname").val('');
+            }
+        });
+    });
+
+</script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
